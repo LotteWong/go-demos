@@ -1,0 +1,102 @@
+basePath: /api/v1
+definitions:
+  models.User:
+    properties:
+      id:
+        description: 用户标识
+        example: "1"
+        type: string
+      password:
+        description: 登录密码
+        example: "123456"
+        type: string
+      username:
+        description: 登录名称
+        example: admin
+        type: string
+    type: object
+  models.Users:
+    properties:
+      items:
+        description: 用户列表
+        items:
+          $ref: '#/definitions/models.User'
+        type: array
+      totalcount:
+        description: 共计条数
+        example: 0
+        type: integer
+    type: object
+host: 127.0.0.1:8080
+info:
+  contact: {}
+  description: '`Markdown` Description For Go-Swagger-Sample Api Docs'
+  title: Title For Go-Swagger-Sample Api Docs
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      consumes:
+      - application/json
+      description: 查询用户列表描述
+      operationId: /users
+      parameters:
+      - description: 登录名称
+        in: query
+        name: username
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/models.Users'
+      summary: 查询用户列表
+      tags:
+      - 用户接口
+    post:
+      consumes:
+      - application/json
+      description: 创建用户
+      operationId: /users
+      parameters:
+      - description: 创建用户请求主体
+        in: body
+        name: createBody
+        required: true
+        schema:
+          $ref: '#/definitions/models.User'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: 创建用户
+      tags:
+      - 用户接口
+  /users/{id}:
+    get:
+      consumes:
+      - application/json
+      description: 查询用户详情描述
+      operationId: /users/:id
+      parameters:
+      - description: 用户标识
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: success
+          schema:
+            $ref: '#/definitions/models.User'
+      summary: 查询用户详情
+      tags:
+      - 用户接口
+swagger: "2.0"
